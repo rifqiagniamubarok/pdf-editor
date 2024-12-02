@@ -1,12 +1,19 @@
-'use client';
-
 import PdfEditor from '@/components/PdfEditor';
+import { Metadata } from 'next';
 
-const page = () => {
+export const metadata: Metadata = {
+  title: 'Editor | Signlys',
+  description: 'Simplify Your Signing Process with Signlys!',
+};
+
+const Page = () => {
   return (
-    <div>
-      <PdfEditor />
-    </div>
+    <>
+      <main>
+        <PdfEditor />
+      </main>
+    </>
   );
 };
-export default page;
+
+export default Page;
