@@ -4,12 +4,8 @@ Signlys is a project aimed at providing a simple and efficient way to edit and s
 
 ## Features
 
-- Edit text in PDF files
-- Add annotations and comments
-- Merge multiple PDF files
-- Split PDF files into separate pages
-- Extract text and images from PDF files
-- Add and manage signatures in PDF files
+- Sign off PDF files
+- Sign multiple PDF files
 
 ## Technologies Used
 
