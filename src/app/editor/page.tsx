@@ -1,3 +1,4 @@
+import MobileVersion from '@/components/partial/MobileVersion';
 import PdfEditor from '@/components/PdfEditor';
 import { Metadata } from 'next';
 
@@ -9,7 +10,8 @@ export const metadata: Metadata = {
 const Page = () => {
   return (
     <>
-      <main>
+      <MobileVersion />
+      <main className="hidden md:inline-block">
         <PdfEditor />
       </main>
     </>
