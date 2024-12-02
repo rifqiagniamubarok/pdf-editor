@@ -53,27 +53,31 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
           <div className="text-sm space-y-2">
             <div className="">
               <div className="flex items-center justify-end gap-0.5">
-                <Button
-                  isIconOnly
-                  size="sm"
-                  color="success"
-                  onClick={() => {
-                    handleDuplicatToAllPage(signatureImageSelect);
-                  }}
-                >
-                  <Layers3 size={16} className="text-white" />
-                </Button>
-                <Button
-                  isIconOnly
-                  size="sm"
-                  color="danger"
-                  onClick={() => {
-                    handleDeleteSignature(signatureImageSelect);
-                    setSignatureImageSelect(null);
-                  }}
-                >
-                  <Trash2 size={16} />
-                </Button>
+                <Tooltip content="Copy this signature to all page" className="dark:text-white">
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    color="secondary"
+                    onClick={() => {
+                      handleDuplicatToAllPage(signatureImageSelect);
+                    }}
+                  >
+                    <Layers3 size={16} className="text-black" />
+                  </Button>
+                </Tooltip>
+                <Tooltip content="Copy this signature to all page" className="dark:text-white">
+                  <Button
+                    isIconOnly
+                    size="sm"
+                    color="danger"
+                    onClick={() => {
+                      handleDeleteSignature(signatureImageSelect);
+                      setSignatureImageSelect(null);
+                    }}
+                  >
+                    <Trash2 size={16} />
+                  </Button>
+                </Tooltip>
               </div>
             </div>
             <div>
@@ -186,9 +190,9 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
                       </div>
                       <div className="flex items-center gap-0.5">
                         {pageNumber !== signature.page && (
-                          <Tooltip content="Copy this signature to current page">
+                          <Tooltip content="Copy this signature to current page" className="dark:text-white">
                             <button
-                              className={'bg-green-500 text-white'}
+                              className={'bg-primary dark:bg-secondary dark:text-black text-white p-1 rounded-sm'}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleDuplicteToCurrentPage(signature);
@@ -198,9 +202,9 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
                             </button>
                           </Tooltip>
                         )}
-                        <Tooltip content="Delete this signature">
+                        <Tooltip content="Delete this signature" className="dark:text-white">
                           <button
-                            className={'bg-red-500 text-white'}
+                            className={'bg-red-500 text-white p-1 rounded-sm'}
                             onClick={(e) => {
                               e.stopPropagation();
                               handleDeleteSignature(signature);
