@@ -12,6 +12,10 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useDrop } from 'react-dnd';
 import SignModal from './SignModal';
+import DropFile from './DropFile';
+import { ArrowBigLeft, ArrowLeft, FileX } from 'lucide-react';
+import Link from 'next/link';
+import ButtonNigtmode from '../partial/ButtonNigtmode';
 
 // Set the worker URL to the correct path
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.mjs';
@@ -105,8 +109,8 @@ const PdfEditor: React.FC = () => {
   const goToPrevPage = () => setPageNumber(pageNumber - 1);
   const goToNextPage = () => setPageNumber(pageNumber + 1);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(event.target.files?.[0] || null);
+  const handleFileChange = (acceptedFiles: File[]) => {
+    setFile(acceptedFiles[0] || null);
     setPageNumber(1);
     setNumPages(null);
     setError(null);
@@ -213,6 +217,12 @@ const PdfEditor: React.FC = () => {
     setSignatureImages(newSignatures);
   };
 
+  const handleDeleteFile = () => {
+    setFile(null);
+    setSignatureImageSelect(null);
+    setSignatureImages([]);
+  };
+
   const sizeSignature = [
     {
       name: 'sm',
@@ -237,91 +247,128 @@ const PdfEditor: React.FC = () => {
   ];
 
   return (
-    <div className="grid grid-cols-4 gap-4 p-4">
-      <Card className=" col-span-3 p-4 bg-white">
-        <div className="w-full h-full">
-          <div className="flex my-2 gap-2">
-            <input type="file" accept="application/pdf" onChange={handleFileChange} className="" />
-            <Button onClick={onOpenSE} className="" isDisabled={!file}>
-              Add Signature
-            </Button>
-            <Button onClick={addSignaturesToPdf} className="" isDisabled={!file}>
-              Download PDF
+    <div className="w-screen h-screen  bg-slate-200">
+      {!file && (
+        <div className="h-screen w-screen flex justify-center items-center bg-primary">
+          <div className="flex flex-col items-center gap-4">
+            <DropFile onDrop={handleFileChange} />
+            <Button as={Link} href="/" variant="light" className="text-white">
+              <ArrowLeft />
+              Back
             </Button>
           </div>
-          <Divider className="mb-4" />
-          <div className="bg-[#333639] text-white px-2 pt-2 pb-4 space-y-2 rounded-md">
-            <div className="w-full flex items-center justify-between">
-              <div>
-                <Button onClick={goToPrevPage} isDisabled={pageNumber <= 1 || !file}>
-                  Prev
-                </Button>
-              </div>
-              <div>
-                {pageNumber} / {numPages}
-              </div>
-              <div>
-                <Button onClick={goToNextPage} isDisabled={pageNumber >= (numPages || 0) || !file}>
-                  Next
-                </Button>
-              </div>
-            </div>
-            <div className="w-full flex justify-center ">
-              <div className="min-h-screen w-fit drop-area">
-                <DndProvider backend={HTML5Backend}>
-                  <DropArea onDrop={handleDrop}>
-                    {file && (
-                      <div className="relative w-full h-full">
-                        {error ? (
-                          <div className="text-red-500">{`Error loading PDF: ${error}`}</div>
-                        ) : (
-                          <Document file={pdfData} onLoadSuccess={onDocumentLoadSuccess} onLoadError={onDocumentLoadError}>
-                            <Page pageNumber={pageNumber} />
-                          </Document>
-                        )}
-                        {signatureImages.map((signature, index) => {
-                          if (signature.page !== pageNumber) return null;
-                          return (
-                            <DraggableSignature
-                              key={index}
-                              isSelected={signatureImageSelect?.id == signature?.id}
-                              src={signature.src}
-                              position={{ x: signature.x, y: signature.y }}
-                              index={index}
-                              onDrop={handleDrop}
-                              onClick={() => setSignatureImageSelect(signature)}
-                              width={signature.width}
-                              height={signature.height}
-                            />
-                          );
-                        })}
-                      </div>
-                    )}
-                  </DropArea>
-                </DndProvider>
-              </div>
-            </div>
-          </div>
-          <SignModal isOpen={isOpenSE} onOpenChange={onOpenChangeSE} onClose={onCloseSE} onSave={handleSaveSignature} />
         </div>
-      </Card>
-
-      <div className="col-span-1 space-y-4">
-        <SidebarEditor
-          signatureImageSelect={signatureImageSelect}
-          sizeSignature={sizeSignature}
-          numPages={numPages}
-          pageNumber={pageNumber}
-          signatureImages={signatureImages}
-          handleDuplicatToAllPage={handleDuplicatToAllPage}
-          handleDeleteSignature={handleDeleteSignature}
-          setSignatureImageSelect={setSignatureImageSelect}
-          handleSyncSelectSignature={handleSyncSelectSignature}
-          handleMovePage={handleMovePage}
-          handleSelectSignature={handleSelectSignature}
-          handleDuplicteToCurrentPage={handleDuplicteToCurrentPage}
-        />
-      </div>
+      )}
+      <SignModal isOpen={isOpenSE} onOpenChange={onOpenChangeSE} onClose={onCloseSE} onSave={handleSaveSignature} />
+      {file && (
+        <div className="flex">
+          <div className="grow">
+            <div className="h-screen overflow-y-auto">
+              <div className="sticky top-0 z-50 p-4 bg-white dark:bg-dark-gray">
+                <div className="flex   w-full justify-between">
+                  <div className="space-x-2">
+                    <Button onClick={onOpenSE} className="" isDisabled={!file} color="primary">
+                      Add Signature
+                    </Button>
+                    <Button onClick={addSignaturesToPdf} className="" isDisabled={!file} color="primary" variant="solid">
+                      Save
+                    </Button>
+                  </div>
+                  <div className="space-x-2">
+                    <Button color="danger" isIconOnly variant="faded" onClick={handleDeleteFile}>
+                      <FileX />
+                    </Button>
+                    <ButtonNigtmode />
+                  </div>
+                </div>
+              </div>
+              <div className="dark:bg-dark-black bg-gray-200 text-white px-2 pt-2 pb-4 space-y-2">
+                <div className="w-full flex items-center justify-between">
+                  <div>
+                    <Button onClick={goToPrevPage} isDisabled={pageNumber <= 1 || !file} color="primary" size="sm">
+                      Prev
+                    </Button>
+                  </div>
+                  <div className="text-primary">
+                    {pageNumber} / {numPages}
+                  </div>
+                  <div>
+                    <Button onClick={goToNextPage} isDisabled={pageNumber >= (numPages || 0) || !file} color="primary" size="sm">
+                      Next
+                    </Button>
+                  </div>
+                </div>
+                <div className="w-full flex justify-center ">
+                  <div className="min-h-screen w-fit drop-area">
+                    <DndProvider backend={HTML5Backend}>
+                      <DropArea onDrop={handleDrop}>
+                        {file && (
+                          <div className="relative w-full h-full">
+                            {error ? (
+                              <div className="text-red-500">{`Error loading PDF: ${error}`}</div>
+                            ) : (
+                              <Document file={pdfData} onLoadSuccess={onDocumentLoadSuccess} onLoadError={onDocumentLoadError}>
+                                <Page pageNumber={pageNumber} />
+                              </Document>
+                            )}
+                            {signatureImages.map((signature, index) => {
+                              if (signature.page !== pageNumber) return null;
+                              return (
+                                <DraggableSignature
+                                  key={index}
+                                  isSelected={signatureImageSelect?.id == signature?.id}
+                                  src={signature.src}
+                                  position={{ x: signature.x, y: signature.y }}
+                                  index={index}
+                                  onDrop={handleDrop}
+                                  onClick={() => setSignatureImageSelect(signature)}
+                                  width={signature.width}
+                                  height={signature.height}
+                                />
+                              );
+                            })}
+                          </div>
+                        )}
+                      </DropArea>
+                    </DndProvider>
+                  </div>
+                </div>
+                <div className="w-full flex items-center justify-between">
+                  <div>
+                    <Button onClick={goToPrevPage} isDisabled={pageNumber <= 1 || !file} color="primary" size="sm">
+                      Prev
+                    </Button>
+                  </div>
+                  <div className="text-primary">
+                    {pageNumber} / {numPages}
+                  </div>
+                  <div>
+                    <Button onClick={goToNextPage} isDisabled={pageNumber >= (numPages || 0) || !file} color="primary" size="sm">
+                      Next
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="grow-0 w-[400px] h-screen max-h-screen overflow-y-auto">
+            <SidebarEditor
+              signatureImageSelect={signatureImageSelect}
+              sizeSignature={sizeSignature}
+              numPages={numPages}
+              pageNumber={pageNumber}
+              signatureImages={signatureImages}
+              handleDuplicatToAllPage={handleDuplicatToAllPage}
+              handleDeleteSignature={handleDeleteSignature}
+              setSignatureImageSelect={setSignatureImageSelect}
+              handleSyncSelectSignature={handleSyncSelectSignature}
+              handleMovePage={handleMovePage}
+              handleSelectSignature={handleSelectSignature}
+              handleDuplicteToCurrentPage={handleDuplicteToCurrentPage}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

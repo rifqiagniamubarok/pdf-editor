@@ -47,7 +47,7 @@ const SignModal: React.FC<SignModalProps> = ({ isOpen, onOpenChange, onClose, on
             <>
               <ModalHeader className="flex flex-col gap-1">Create Signature</ModalHeader>
               <ModalBody>
-                <div className="">
+                <div className="bg-gray-200 dark:bg-gray-400">
                   <SignatureCanvas
                     ref={signatureRef}
                     penColor="black"

@@ -44,10 +44,10 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
   handleDuplicteToCurrentPage,
 }) => {
   return (
-    <>
+    <div className="bg-white dark:bg-dark-gray text-black dark:text-white  h-screen fixed top-0 w-[400px] overflow-y-auto">
       {signatureImageSelect && (
-        <Card className="space-y-1 px-4 py-4">
-          <div className="w-full aspect-2/1  bg-slate-200 rounded-md">
+        <div className="space-y-1 px-4 py-4 ">
+          <div className="w-fit aspect-2/1  bg-gray-200 dark:bg-gray-400 rounded-md">
             <img src={signatureImageSelect.src} alt="Signature" className="w-full aspect-2/1" />
           </div>
           <div className="text-sm space-y-2">
@@ -127,17 +127,22 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
                       setSignatureImageSelect(moment);
                       handleSyncSelectSignature(moment);
                     }}
+                    color="primary"
                   >
                     {size.name}
                   </Button>
                 ))}
-                {sizeSignature.filter((size) => size.width == signatureImageSelect.width).length === 0 && <Button variant="bordered">custom</Button>}
+                {sizeSignature.filter((size) => size.width == signatureImageSelect.width).length === 0 && (
+                  <Button variant="bordered" color="primary">
+                    custom
+                  </Button>
+                )}
               </div>
             </div>
           </div>
-        </Card>
+        </div>
       )}
-      <Card className="space-y-1 p-2">
+      <div className="space-y-1 p-2">
         <Accordion selectionMode="multiple" isCompact showDivider={false}>
           {[...Array(numPages || 0)].map((_, index) => (
             <AccordionItem
@@ -145,7 +150,9 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
               aria-label={`Accordion ${index}`}
               title={
                 <div className="flex items-center gap-2">
-                  <p className={classNames('text-base', index == pageNumber - 1 ? 'text-blue-500' : 'text-black')}>{'Page ' + (index + 1)}</p>
+                  <p className={classNames('text-base', index == pageNumber - 1 ? 'text-primary dark:text-secondary font-semibold' : 'text-black dark:text-white font-medium')}>
+                    {'Page ' + (index + 1)}
+                  </p>
                   {pageNumber != index + 1 && (
                     <ExternalLink
                       size={16}
@@ -164,7 +171,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
                   .map((signature, index) => (
                     <div
                       key={index}
-                      className="bg-white flex justify-between items-center hover:bg-gray-200 cursor-pointer p-1 rounded-md"
+                      className=" flex justify-between items-center  cursor-pointer p-1 rounded-md"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleSelectSignature(signature);
@@ -172,7 +179,9 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
                     >
                       <div className="flex items-center gap-2">
                         <img src={signature.src} alt="Signature" style={{ width: '40px', height: '20px' }} className="object-contain " />
-                        <p className={classNames('text-xs', signature?.id == signatureImageSelect?.id ? 'text-blue-500' : 'text-black')}>{signature.name}</p>
+                        <p className={classNames('text-xs', signature?.id == signatureImageSelect?.id ? 'text-blue-500 dark:text-blue-300' : 'text-dark-black dark:text-white')}>
+                          {signature.name}
+                        </p>
                       </div>
                       <div className="flex items-center gap-0.5">
                         {pageNumber !== signature.page && (
@@ -206,8 +215,8 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
             </AccordionItem>
           ))}
         </Accordion>
-      </Card>
-    </>
+      </div>
+    </div>
   );
 };
 
