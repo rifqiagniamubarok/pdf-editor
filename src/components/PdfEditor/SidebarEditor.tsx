@@ -160,6 +160,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
                         e.preventDefault();
                         handleMovePage(index + 1);
                       }}
+                      className="text-black dark:text-white"
                     />
                   )}
                 </div>
