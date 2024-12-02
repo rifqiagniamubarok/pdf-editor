@@ -179,7 +179,7 @@ const SidebarEditor: React.FC<SidebarEditorProps> = ({
                       }}
                     >
                       <div className="flex items-center gap-2">
-                        <img src={signature.src} alt="Signature" style={{ width: '40px', height: '20px' }} className="object-contain " />
+                        <img src={signature.src} alt="Signature" style={{ width: '40px', height: '20px' }} className="object-contain dark:bg-gray-400 dark:rounded-sm" />
                         <p className={classNames('text-xs', signature?.id == signatureImageSelect?.id ? 'text-blue-500 dark:text-blue-300' : 'text-dark-black dark:text-white')}>
                           {signature.name}
                         </p>
