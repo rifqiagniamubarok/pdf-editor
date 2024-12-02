@@ -16,6 +16,7 @@ import DropFile from './DropFile';
 import { ArrowBigLeft, ArrowLeft, FileX } from 'lucide-react';
 import Link from 'next/link';
 import ButtonNigtmode from '../partial/ButtonNigtmode';
+import dayjs from 'dayjs';
 
 // Set the worker URL to the correct path
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.mjs';
@@ -175,7 +176,9 @@ const PdfEditor: React.FC = () => {
 
       const modifiedPdfBytes = await pdfDoc.save();
       const blob = new Blob([modifiedPdfBytes], { type: 'application/pdf' });
-      saveAs(blob, 'signed-document.pdf');
+      const originalFileName = file.name.replace(/\.pdf$/, '');
+      const editedFileName = `${originalFileName}-${dayjs(new Date()).format('YYYYMMDDHHmmss')}.pdf`;
+      saveAs(blob, editedFileName);
     } catch (err) {
       console.error('Error editing and downloading PDF:', err);
       setError('Failed to edit and download PDF.');
