@@ -1,7 +1,7 @@
 import ButtonNigtmode from '@/components/partial/ButtonNigtmode';
 import MobileVersion from '@/components/partial/MobileVersion';
 import { Button, Card } from '@nextui-org/react';
-import { FileText } from 'lucide-react';
+import { FileText, Layers3, PackageOpen, Proportions, ShieldEllipsis } from 'lucide-react';
 import { Metadata } from 'next';
 
 import Link from 'next/link';
@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <>
       <MobileVersion />
-      <main className="w-screen h-screen dark:bg-dark-black bg-white hidden md:inline-block">
+      <main className="w-screen min-h-screen pb-20 dark:bg-dark-black bg-white hidden md:inline-block">
         <div className="bg-primary">
           <div className="p-4 container mx-auto">
             <div className="flex justify-end items-center">
@@ -56,6 +56,40 @@ export default function Home() {
                 </div>
               </Card>
             </Link>
+          </div>
+        </div>
+        <div className="mt-14">
+          <p className="text-center text-3xl font-semibold text-black dark:text-secondary">Features</p>
+          <div className="flex justify-center mt-4">
+            <div className="w-2/3  grid grid-cols-3 gap-4">
+              <Card className="p-4 w-full space-y-3 bg-white dark:bg-dark-gray">
+                <div className="flex justify-center">
+                  <Proportions size={100} className="text-emerald-800 dark:text-emerald-500" />
+                </div>
+                <div>
+                  <p className="text-center text-2xl font-semibold mb-2 text-black dark:text-secondary">Layout</p>
+                  <p className="text-center text-lg text-black dark:text-white">A highly intuitive layout similar to other editing applications.</p>
+                </div>
+              </Card>
+              <Card className="p-4 w-full space-y-3 bg-white dark:bg-dark-gray">
+                <div className="flex justify-center">
+                  <Layers3 size={100} className="text-sky-800 dark:text-sky-500" />
+                </div>
+                <div>
+                  <p className="text-center text-2xl font-semibold mb-2 text-black dark:text-secondary">Signature Copier</p>
+                  <p className="text-center text-lg text-black dark:text-white">Easily copy and paste your signature across all pages.</p>
+                </div>
+              </Card>
+              <Card className="p-4 w-full space-y-3 bg-white dark:bg-dark-gray">
+                <div className="flex justify-center">
+                  <PackageOpen size={100} className="text-red-800 dark:text-red-500" />
+                </div>
+                <div>
+                  <p className="text-center text-2xl font-semibold mb-2 text-black dark:text-secondary">Open Source</p>
+                  <p className="text-center text-lg text-black dark:text-white">This project is open source, and you can contribute to its development on GitHub.</p>
+                </div>
+              </Card>
+            </div>
           </div>
         </div>
       </main>
