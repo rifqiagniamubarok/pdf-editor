@@ -5,7 +5,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import { PDFDocument } from 'pdf-lib';
 import { saveAs } from 'file-saver';
-import { Button, Card, Divider, useDisclosure } from '@nextui-org/react';
+import { Button, Card, Divider, Spinner, useDisclosure } from '@nextui-org/react';
 import DraggableSignature from './DraggableSignature';
 import SidebarEditor from './SidebarEditor';
 import { DndProvider } from 'react-dnd';
@@ -83,6 +83,7 @@ const PdfEditor: React.FC = () => {
   const [file, setFile] = useState<File | null>(null);
   const [pdfData, setPdfData] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (file) {
@@ -94,6 +95,7 @@ const PdfEditor: React.FC = () => {
         setPdfData(pdfDataUri);
       };
       reader.readAsArrayBuffer(file);
+      setIsLoading(false);
     }
   }, [file]);
 
@@ -110,6 +112,7 @@ const PdfEditor: React.FC = () => {
   const goToNextPage = () => setPageNumber(pageNumber + 1);
 
   const handleFileChange = (acceptedFiles: File[]) => {
+    setIsLoading(true);
     setFile(acceptedFiles[0] || null);
     setPageNumber(1);
     setNumPages(null);
@@ -248,7 +251,7 @@ const PdfEditor: React.FC = () => {
 
   return (
     <div className="w-screen h-screen  bg-slate-200">
-      {!file && (
+      {!file && !isLoading && (
         <div className="h-screen w-screen flex justify-center items-center bg-primary">
           <div className="flex flex-col items-center gap-4">
             <DropFile onDrop={handleFileChange} />
@@ -259,8 +262,13 @@ const PdfEditor: React.FC = () => {
           </div>
         </div>
       )}
+      {isLoading && (
+        <div className="w-screen h-screen flex justify-center items-center bg-white dark:bg-dark-gray">
+          <Spinner color="primary" />
+        </div>
+      )}
       <SignModal isOpen={isOpenSE} onOpenChange={onOpenChangeSE} onClose={onCloseSE} onSave={handleSaveSignature} />
-      {file && (
+      {!isLoading && file && (
         <div className="flex">
           <div className="grow">
             <div className="h-screen overflow-y-auto">
