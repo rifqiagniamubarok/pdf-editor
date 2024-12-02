@@ -12,6 +12,8 @@ Signlys is a project aimed at providing a simple and efficient way to edit and s
 - **React**: The main framework used for building the user interface.
 - **Next.js**: A React framework for server-side rendering and static site generation.
 - **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+- **NextUI**: A React UI library for building modern web applications.
+- **Lucide Icons**: A set of beautiful and customizable icons for your React application.
 - **Tailwind CSS**: A utility-first CSS framework for styling.
 - **react-dnd**: A set of React utilities to help build complex drag-and-drop interfaces.
 - **pdf-lib**: A library for creating and modifying PDF documents.
