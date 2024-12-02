@@ -25,7 +25,7 @@ const DropFile: React.FC<DropFileProps> = ({ onDrop }) => {
             <FileUp size={40} />
           </div>
           <div>
-            <p className="text-xl mt-4 font-semibold">Select your pdf here or drop here</p>
+            <p className="text-xl mt-4 font-semibold"> {isDragActive ? 'Drop the files here ...' : 'Select your pdf here or drop here'}</p>
           </div>
         </div>
       </Card>

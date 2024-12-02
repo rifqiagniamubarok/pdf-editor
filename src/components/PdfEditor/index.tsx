@@ -264,12 +264,12 @@ const PdfEditor: React.FC = () => {
         </div>
       )}
       {isLoading && (
-        <div className="w-screen h-screen flex justify-center items-center bg-white dark:bg-dark-gray">
+        <div className="fixed inset-0 z-50 w-screen h-screen flex justify-center items-center bg-white dark:bg-dark-gray">
           <Spinner color="primary" />
         </div>
       )}
       <SignModal isOpen={isOpenSE} onOpenChange={onOpenChangeSE} onClose={onCloseSE} onSave={handleSaveSignature} />
-      {!isLoading && file && (
+      {file && (
         <div className="flex">
           <div className="grow">
             <div className="h-screen overflow-y-auto">
