@@ -95,16 +95,17 @@ const PdfEditor: React.FC = () => {
         setPdfData(pdfDataUri);
       };
       reader.readAsArrayBuffer(file);
-      setIsLoading(false);
     }
   }, [file]);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
     setError(null);
+    setIsLoading(false);
   };
 
   const onDocumentLoadError = (error: Error) => {
+    setIsLoading(false);
     setError(error.message);
   };
 
