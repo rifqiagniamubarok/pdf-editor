@@ -86,7 +86,9 @@ export default function Home() {
                 </div>
                 <div>
                   <p className="text-center text-2xl font-semibold mb-2 text-black dark:text-secondary">Open Source</p>
-                  <p className="text-center text-lg text-black dark:text-white">This project is open source, and you can contribute to its development on GitHub.</p>
+                  <p className="text-center text-lg text-black dark:text-white">
+                    This project is open source and free for everyone to use and contribute to its development on GitHub.
+                  </p>
                 </div>
               </Card>
             </div>
