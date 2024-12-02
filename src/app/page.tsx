@@ -1,10 +1,14 @@
-'use client';
-
 import ButtonNigtmode from '@/components/partial/ButtonNigtmode';
 import { Button, Card } from '@nextui-org/react';
 import { FileText } from 'lucide-react';
+import { Metadata } from 'next';
 
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Signlys',
+  description: 'Simplify Your Signing Process with Signlys!',
+};
 
 export default function Home() {
   return (
