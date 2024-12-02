@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Signlys
 
-## Getting Started
+Signlys is a project aimed at providing a simple and efficient way to edit and sign PDF files. This repository contains the source code and documentation for the Signlys project.
 
-First, run the development server:
+## Features
+
+- Edit text in PDF files
+- Add annotations and comments
+- Merge multiple PDF files
+- Split PDF files into separate pages
+- Extract text and images from PDF files
+- Add and manage signatures in PDF files
+
+## Technologies Used
+
+- **React**: The main framework used for building the user interface.
+- **Next.js**: A React framework for server-side rendering and static site generation.
+- **TypeScript**: A typed superset of JavaScript that compiles to plain JavaScript.
+- **Tailwind CSS**: A utility-first CSS framework for styling.
+- **react-dnd**: A set of React utilities to help build complex drag-and-drop interfaces.
+- **pdf-lib**: A library for creating and modifying PDF documents.
+- **react-pdf**: A library to display PDFs in a React application.
+- **react-signature-canvas**: A library for capturing signatures.
+
+## Installation
+
+To install the required libraries, run the following command:
+
+```bash
+npm install
+```
+
+## Usage
+
+To start the Signlys application in development mode, run the following command:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+To build the Signlys application for production, run the following command:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To start the Signlys application in production mode, run the following command:
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm start
+```
