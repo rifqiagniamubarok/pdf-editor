@@ -51,7 +51,7 @@ export default function Home() {
                     <FileText size={40} />
                   </div>
                   <div>
-                    <p className="text-xl font-semibold">Start sign your document</p>
+                    <p className="text-xl font-semibold">Start signing your document</p>
                   </div>
                 </div>
               </Card>
