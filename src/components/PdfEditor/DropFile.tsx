@@ -6,15 +6,28 @@ import { useDropzone } from 'react-dropzone';
 interface DropFileProps {
   onDrop: (acceptedFiles: File[]) => void;
 }
+const validateFiles = (files: File[]) => {
+  return files.every(isPdfFile);
+};
+
+const isPdfFile = (file: File) => file.type === 'application/pdf';
 
 const DropFile: React.FC<DropFileProps> = ({ onDrop }) => {
   const handleDrop = useCallback(
     (acceptedFiles: File[]) => {
-      onDrop(acceptedFiles);
+      if (validateFiles(acceptedFiles)) {
+        onDrop(acceptedFiles);
+      }
     },
     [onDrop]
   );
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: handleDrop });
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: handleDrop,
+    accept: {
+      'application/pdf': ['.pdf'],
+    },
+  });
 
   return (
     <div {...getRootProps()} className="cursor-pointer ">
