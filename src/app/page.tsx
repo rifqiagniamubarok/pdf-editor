@@ -2,20 +2,17 @@
 
 import ButtonNigtmode from '@/components/partial/ButtonNigtmode';
 import { Button, Card } from '@nextui-org/react';
-import { FileText, Moon, Sun } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { FileText } from 'lucide-react';
+
 import Link from 'next/link';
 
 export default function Home() {
-  const { theme, setTheme } = useTheme();
   return (
-    <div className="w-screen h-screen dark:bg-dark-black bg-white ">
+    <main className="w-screen h-screen dark:bg-dark-black bg-white ">
       <div className="bg-primary">
         <div className="p-4 container mx-auto">
-          <div className="flex justify-between items-center">
-            <div></div>
-            <div className="flex items-center gap-4">
-              <Button as={Link} target="__black" href="https://github.com/rifqiagniamubarok/pdf-editor" variant="light" isIconOnly size="sm"></Button>
+          <div className="flex justify-end items-center">
+            <div className="flex items-center gap-4 ">
               <ButtonNigtmode />
             </div>
           </div>
@@ -54,6 +51,6 @@ export default function Home() {
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
