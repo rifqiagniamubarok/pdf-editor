@@ -91,7 +91,7 @@ const PdfEditor: React.FC = () => {
       const reader = new FileReader();
       reader.onload = async (e) => {
         const pdfBytes = e.target?.result as ArrayBuffer;
-        const pdfDoc = await PDFDocument.load(pdfBytes);
+        const pdfDoc = await PDFDocument.load(pdfBytes, { ignoreEncryption: true });
         const pdfDataUri = await pdfDoc.saveAsBase64({ dataUri: true });
         setPdfData(pdfDataUri);
       };
@@ -156,7 +156,7 @@ const PdfEditor: React.FC = () => {
 
     try {
       const pdfBytes = await file.arrayBuffer();
-      const pdfDoc = await PDFDocument.load(pdfBytes);
+      const pdfDoc = await PDFDocument.load(pdfBytes, { ignoreEncryption: true });
 
       for (const signature of signatureImages) {
         const imageBytes = await fetch(signature.src).then((res) => res.arrayBuffer());
@@ -267,8 +267,11 @@ const PdfEditor: React.FC = () => {
         </div>
       )}
       {isLoading && (
-        <div className="fixed inset-0 z-50 w-screen h-screen flex justify-center items-center bg-white dark:bg-dark-gray">
-          <Spinner color="primary" />
+        <div className="fixed inset-0 z-50 w-full h-full flex justify-center items-center bg-white dark:bg-dark-gray">
+          <div className="flex justify-center items-center gap-4">
+            <Spinner color="primary" />
+            <p>Loading</p>
+          </div>
         </div>
       )}
       <SignModal isOpen={isOpenSE} onOpenChange={onOpenChangeSE} onClose={onCloseSE} onSave={handleSaveSignature} />
@@ -276,24 +279,27 @@ const PdfEditor: React.FC = () => {
         <div className="flex">
           <div className="grow">
             <div className="h-screen overflow-y-auto">
-              <div className="sticky top-0 z-50 p-4 bg-white dark:bg-dark-gray">
-                <div className="flex   w-full justify-between">
-                  <div className="space-x-2">
-                    <Button onClick={onOpenSE} className="" isDisabled={!file} color="primary">
-                      Add Signature
-                    </Button>
-                    <Button onClick={addSignaturesToPdf} className="" isDisabled={!file} color="primary" variant="solid">
-                      Save
-                    </Button>
-                  </div>
-                  <div className="space-x-2">
-                    <Button color="danger" isIconOnly variant="faded" onClick={handleDeleteFile}>
-                      <FileX />
-                    </Button>
-                    <ButtonNigtmode />
+              {/* Toolbar */}
+              {!isLoading && (
+                <div className="sticky top-0 z-40 p-4 bg-white dark:bg-dark-gray">
+                  <div className="flex   w-full justify-between">
+                    <div className="space-x-2">
+                      <Button onClick={onOpenSE} className="" isDisabled={!file} color="primary">
+                        Add Signature
+                      </Button>
+                      <Button onClick={addSignaturesToPdf} className="" isDisabled={!file} color="primary" variant="solid">
+                        Save
+                      </Button>
+                    </div>
+                    <div className="space-x-2">
+                      <Button color="danger" isIconOnly variant="faded" onClick={handleDeleteFile}>
+                        <FileX />
+                      </Button>
+                      <ButtonNigtmode />
+                    </div>
                   </div>
                 </div>
-              </div>
+              )}
               <div className="dark:bg-dark-black bg-gray-200 text-white px-2 pt-2 pb-4 space-y-2">
                 <div className="w-full flex items-center justify-between">
                   <div>
